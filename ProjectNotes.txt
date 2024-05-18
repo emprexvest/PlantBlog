@@ -563,7 +563,7 @@ Added to models/plant.js added to the location field, coordinates object, proper
 Added to views/plants/_new_current.ejs added to the if () arguments (article.location && location.coordiantes),
 Created a new file public/javascripts/mapinit.js,
 Added to public/javascripts/mapinit.js declared let map; and a named function initializeMap() { map = new google.maps.Map(document.getElementById('map'), {})},
-Added to views/plants/_form_fields add script element <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCan1B_SwsXeN1BkGxXcKvq86KFrOTVlcI&libraries=places&callback=initializeMap" defer></script>,
+Added to views/plants/_form_fields add script element <script src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initializeMap" defer></script>,
 Commented out from public/javascripts/mapinit.js // google.maps.event.addDomListener(window, 'load', initializeMap);,
 Added to views/plants/_form_fields.ejs div element as the container of Google Maps <div id="map" style="height: 300px;"></div>,
 Added to public/javascripts/mapinit.js Added let marker; const mapOptions {} and passed mapOptions as callback to the Map constructor,
