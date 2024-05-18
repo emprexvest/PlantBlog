@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporary Upload Form</title>
+    <!-- Add your CSS links here -->
+</head>
+<body>
+
+<form action="/temporary-upload" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input required type="text" name="title" id="title" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="markdown">Markdown</label>
+        <textarea required name="markdown" id="markdown" class="form-control"></textarea>
+    </div>
+    <input type="file" class="filepond" name="filepond" data-filepond>
+    <a href="/" class="btn btn-secondary mt-2">Cancel</a>
+    <button type="submit" class="btn btn-success mt-2">Upload</button>
+</form>
+
+<!-- Add your other HTML content here -->
+
+<script src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        const inputElement = document.querySelector("input.filepond");
+        const pond = FilePond.create(inputElement, {
+            allowFileTypeValidation: true,
+            acceptedFileTypes: ["image/jpeg", "image/png", "image/gif"],
+            allowImagePreview: true,
+            server: {
+                process: '/temporary-upload' // Change this to the appropriate route
+            }
+        });
+
+        pond.on('addfile', (error, file) => {
+            if (!error) {
+                console.log('File added:', file.filename);
+            } else {
+                console.log('Error adding file:', error);
+            }
+        });
+
+        pond.on('processfileerror', (error, file) => {
+            console.log('Error processing file:', error);
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!-- Importing of all CSS links and JavaScript files for Filepond, JavaScript, and Google Maps API -->
+<link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
+<link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>
+<script defer src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script defer src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>
+<script defer src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+<script defer src="https://unpkg.com/filepond@^4/dist/filepond.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCan1B_SwsXeN1BkGxXcKvq86KFrOTVlcI&libraries=places&callback=initializeMap" defer></script>
+<script src="/javascripts/mapinit.js"></script>
+
+
+<!-- Form for creating or editing articles -->
+<form action="/plants" method="POST">
+    <div class="form-group">
+        <!-- Input field for the article title -->
+        <label for="title">Title</label>
+        <input required value="<%= article.title %>" type="text" name="title" id="title" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <!-- Textarea for the article description -->
+        <label for="description">Description</label>
+        <textarea name="description" id="description" class="form-control"><%= article.description %></textarea>
+    </div>
+
+    <div class="form-group">
+        <!-- Textarea for the article content in markdown format -->
+        <label for="markdown">Markdown</label>
+        <textarea required name="markdown" id="markdown" class="form-control"><%= article.markdown %></textarea>
+    </div>
+
+    <div class="form-group">
+        <!-- Input fields for latitude of the articles location -->
+        <label for="locationLat">Latitude</label>
+        <input type="text" name="locationLat" id="locationLat" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <!-- Input fields for longitude of the articles location -->
+        <label for="locationLng">Longitude</label>
+        <input type="text" name="locationLng" id="locationLng" class="form-control">
+    </div>
+
+    <!-- Input field for uploading an image -->
+    <input type="file" class="filepond" name="filepond" data-filepond>
+
+    <!-- Buttons for canceling or saving the article -->
+    <a href="/" class="btn btn-secondary mt-2">Cancel</a>
+    <button type="submit" class="btn btn-success mt-2">Save</button>
+</form>
+<div id="map" style="height: 300px;"></div>
+
+
+
+<!-- FScript for initializing Filepond and handling file upload events -->
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+
+        // Registering Filepond plugins and parsing the DOM for Filepond elements
+        FilePond.registerPlugin(FilePondPluginImagePreview, FilePondPluginImageResize, FilePondPluginFileEncode);
+        FilePond.parse(document.body);
+
+        // Get all FilePond instances
+        const filePonds = document.querySelectorAll("input.filepond");
+        console.log('Collection of FilePonds:', filePonds);
+
+        // Image resizing properties
+        const imageReizeProperties = {
+            imageResizeTargetWidth: 800, // Set the output width in pixels
+            imageResizeTargetHeight: null, // Height will be calculated automatically based on the aspect ratio
+            imageResizeMode: 'cover', // Resize mode: 'force', 'cover', or 'contain'
+            imageResizeUpscale: false // Prevent upscaling of smaller images
+        }
+
+        // Loop through each FilePond instance to setup event listeners and configure resizing
+        filePonds.forEach(pond => {
+            pond.on('addfile', (error, file) => {
+                if (!error) {
+                    console.log('File added:', file.filename);
+                } else {
+                    console.log('Error adding file:', error);
+                }
+            })
+        });
+
+        pond.on('processfileerror', (error, file) => {
+            console.log('Error processing file:', error);
+        });
+
+        // Configure resizing
+        pond.setOptions({
+            //Add image resizing properties here
+        })
+
+        
+    });
+</script>
+
+
+

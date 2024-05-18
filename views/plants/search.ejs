@@ -1,0 +1,33 @@
+<head>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<div class="container">
+    <h1 class="mb-4">Search Results</h1>
+    <% if (articles.length === 0) { %>
+            <p>No matching articles found</p>
+    <% } else { %>
+        <div class="row">
+        <!-- <ul> -->
+            <% articles.forEach(article => { %>
+                <!-- <li class="search-result-card"> -->
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title"><a href="/plants/<%= article.slug %>"><%= article.title %></a></h4>
+                            <% if (article.imageData && article.imageType) { %>
+                                <img src="data:<%= article.imageType %>;base64,<%= article.imageData.toString('base64') %>" alt="Article Image" class="card-img-top"> 
+                            <% } %>
+                            <div class="card-subtitle text-muted mb-2">
+                                <%= article.createdAt.toLocaleDateString() %>
+                            </div>
+                            <div class="class-text mb-2"><%= article.description %></div>
+                            <a href="plants/<%= article.slug %>" class="btn btn-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- </li> -->
+            <% }); %>
+        </div>
+        <!-- </ul> -->
+    <% } %>
+</div>

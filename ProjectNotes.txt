@@ -1,0 +1,989 @@
+-Project Overview
+
+Title: Garden Whispers: The Secrets that Plants Tell
+
+Placeholder Title: Plant Blog
+
+Github Project URL: https://github.com/emprexvest/plant-blog
+
+What is my project: It is a multiuser blog site with the ability to upload article consisting of text, Google Maps API for the location of the article, markdown, thumbs up system, and encoded images.
+
+Design: Parallax scrolling background, navbar, content, footer.
+
+Libraries: Bootstrap CDN, EJS, Node.js, Express, Mongoose, *Currently not used* body-parser, dotenv, express-ejs-layouts, *Currently not used* method-override, marked, slugify, dompurify, jsdom, nodemon, *Currently not used* multer, filepond-plugin-file-encode CDN, filepond-plugin-image-preview.js CDN, Axios, filepond-plugin-image-resize CDN, Google Maps API CDN, and Filepond CDN.
+
+Todo: Create README.md, add recommendations with a data scrapper(Learn how to add targeted advertising) based on the plant type in the article, add Google Maps API, add user account functionality, add an admin page to add or remove users and change passwords securely, include a list of users on the admin page, add parallax scrolling, make a legend for markdown, add mock webstore with Stripe API, add fallback pages for errors.
+
+
+-----------------------------------------------------------------
+JavaScript Project Progress Summary
+
+Linked Bootstrap CDN,
+Completed Navbar markup,
+Navbar styled with Bootstrap,
+Navbar searchbox is semantic and non-functional,
+Card searchbox is functional and connected to cardScript.js,
+Card placeholder data is scrapped from https://jsonplaceholder.typicode.com/users, as an array of JSON objects,
+Initialized the project in Node,
+Setup nodeMon to automatically refresh the server on changes,
+Installed Express as a node,
+Installed Mongoose as a node,
+Installed EJS,
+Installed Filepond,
+Installed Dotenv,
+Installed body-parser,
+Installed express-ejs-layouts,
+Installed nodemon,
+Completed a single input and textarea element in form.html,
+Completed the article model schema,
+Created .env file and assigned DATABASE_URL as"DATABASE_URL=mongodb://localhost/PlantBlog;" with useNewUrlParser: true,
+Created the const app = express();,
+Defined the view engine using express .set() method as EJS, app.set('view engine', 'ejs');
+Verified that EJS is set as the view engine using console.log('View Engine set to: ', app.get('view engine'));,
+Created the views folder,
+Defined the default path for the views folder as current module folder + absolute /views folder, app.set('views', __dirname + '/views');
+Verified that EJS is set as the view engine using console.log('View set to: ', app.get('views'));,
+Created the views layouts folder views\layouts,
+Verified that express-ejs-layouts is set to the \views/layouts/layout,
+Defined the const expressLayouts = express-ejs-layouts,
+Defined the app.use(expressLayouts) callback,
+Defined the db = mongoose.connection,
+Initiallized the event handle listener for database errors with db.on('error', error => console.error(error));,
+Verified that the event handle listener is accessiable through the db.on() method,
+Initialized the app.listen() method to initialize the server on port 3000,
+Verified that the server is running and listening on port 3000 with app.get('/', (req, res) => { res.send('Hello World!'); });,
+Setup fundamental Express server,
+Created layout.ejs and added the index.html code,
+Verified that the render() method is working with the layout.ejs,
+Created the public folder,
+Created the routes folder,
+Created the route for plants.js,
+Defined the const plantRouter = require('./routes/plants');,
+Invoked the app.use() method to access the plant router app.use('/plants', plantRouter);,
+Verified that the router http://localhost:3000/plants is working with 'Test Plant List' string,
+Created the views\plants folder,
+Created the index.ejs in the views\plants folder,
+Added the views\plants\index.ejs template to the views\index.ejs using <%- include('plants/index') %>,
+Verified that it is being displayed on the in the browser,
+Changed of the model article.js to plant.js,
+Changed the const articleScema to plantSchema,
+Changed the name of the model in the module.exports = mongoose.model('Plant', plantSchema);,
+Created the plantform.ejs template,
+Included the template in the plants/index.ejs,
+Moved the form and textarea markup to plantform.ejs,
+Created another form containing an input and submit button with the class btn and btn-success,
+Testing the render() methods second optional locals parameter, with the { articles: articles } object,
+Created a local const articles object with the member variables,
+Changed the name of the const articles object from articles: articles, to article: article,
+Created a container div in plantform.ejs, containing the title, card body, and subtitle, with the reference to the article.createdAt new Date() object,
+Chained the .toLocaleDateString() to the article.createdAt object to parse to the regional date syntax,
+Added property to the articles object as description: 'Description Placeholder',
+Created a div with the Bootstrap classes card-text mb-2(margin bottom 2rem), with <%= articles.description %> as the innerHTML,
+Created the new.ejs template,
+Created the partial _form_fields.ejs template,
+Defined the router.post() method as post('/', (req, res) =>{});,
+Added the _form_fields.ejs template to the plants/index.ejs
+Added a div for the title with Bootstrap class form-group, containing a label and a required input element with a class of form-control,
+Added a button element with Bootstrap class btn, btn-success, mt-2, with the type submit,
+Added the div for the description with Bootstrap class form-group, containing a label and textarea element without specificed col or row, with a class of form-control,
+Added the div for the markdown with Bootstrap class form-group, containing a label and textarea element without specificed col or row, with a class of form-control,
+Commented out the const port = 3000 variable, because the listener handle is coming from the env object or the num 3000,
+Updated the monogoose.connect() method parameters to include the useUnifiedTopology: true,
+Testing the routes/plants.js route by commenting out the router.get() and router.post() and replacing it with a send() test string,
+Test passed, removed the test code and comments to enable the render() method of the /plants index.ejs
+Verified that the router plants.js, is working and REMEMBER the router.get('/nameofroute', (req, res) => { res.render('plants/_form_fields') },
+Removed the .get() route of /test, with the render('_form_fields'),
+Commented out a pending update of a  for the main index .get() request and render,
+Testing the .navbar color styling listed in the CSS Styling section, on the local index.html,
+Commented out the cards search
+
+-Notes from 06_30_23
+Removed the <%- include('plantform'); %> template from the plants/index.ejs,
+Redefined the main .get() route const for the article from an object literal {}, to an array [] of object literals {},
+Tested the new const article array by accessing the array's [0] index for the new Date() constructor and placed it in plants/index.ejs <%= article[0].createdAt %>,
+Added a container div to the plants/index.ejs, with an anchor tag href'd to /plants/new, and a div card, div card-body class, and the forEach() method to sort through the article array,
+Updated the plants/new.ejs and placed the _form_fields partial template into the a form element <%- include('_form_fields'); %>,
+Added the router.get('/new', (req, res) => { res.render('plants/_form_fields') }) to the routes/plants.js,
+Verfied that in the plants/new.ejs anchor button href is working and loading the _form_fields partial with within the layout,
+Updated the plants.js model plantSchema object shape fields to include title, description, createdAt, and markdown value-pairs,
+Updated the routes/plants.js route router.post() method, to include the cost article = new Plant({ title: req.body.title, description: req.body.description, markdown: req.body.markdown }),
+Updated the routes/plants.js route as an async callback with await set to the articles.save() method,
+Updated the await article.save() method call into a try with a const article = await article.save() and a catch with an error parameter (e) as         res.render('/plants/new', { article: article });,
+Added a route for routes/plants.js for the id as get.(':id', (req, res) => {}),
+Backed up of project
+
+-Notes from 07_01_23
+Added default values and inner HTML to the _form_fields input and textarea elements,
+Added a temporary variable to the routes/plants.js for the /new route,
+Comparing the backup of routes/plants.js route from 06_30_23 to the current routes/plants.js route,
+Commented out a duplicate of the const plant = require('./../models/plant') from the routes/plants.js route,
+Removed the duplicate commented out const plant,
+Verified that the router.get('/new') route is working and that the console.log(Plant) has access to the Model { Plant },
+Added console.log(req.body); to routes/plants.js to check if the router.post() method has access to the req.body,
+Updated form element in the views/new.ejs to include the action="/plants" and method="POST" <form action="/plants" method="POST">,
+Added a form element wrapper to the _form_fields.ejs with the attributes the action="/plants" and method="POST",
+Backed up project
+
+-Notes from 07_02_23
+Commented out the router.post() routes/plants.js to test for the bug,
+Removed the commented out router.post() because it did not fix the bug,
+Commented out the form element in views/new.ejs,
+Commented out the form element in the views/_form_fields.ejs.
+Removed the comment out from the views/new.ejs and _form_fields.ejs because it did not fix the problem,
+Commented out the <%- include('plants/index) %> from views/index.ejs,
+Imported a backup of routes/plants.js from 06_30_23,
+Renamed routes/plants.js to plants.current.js,
+Imported a backup of views/_form_fields.ejs from 06_30_23,
+Renamed views/_form_fields.ejs to _form_fields.current.ejs,
+Added the form wrapper to the temp backup copy of views/_form_fields.ejs,
+Removed the attributes action="/plants" and method="POST" from the views/new.ejs,
+Removed the form element with the <%- include('_form_fields'); %> from the views/new.ejs,
+Created a template partial views/plants/_test_template.ejs,
+Backed up project,
+Commented out the router.post() method call from routes/plants.js,
+Added a router.post() method call to routes/plants.js with the parameters .post('/', (req, res) => { const article = new Plant({ title: req.body.title, })}); 
+Added a try catch to routes/plants.js as try{ article = await article.save(); res.render('plants/_test_template', { article: article }) } catch (e) { res.render('plants/new', { article: article }) },
+Added the HTML markup to the views/plants/_test_template.ejs partial of an h2 element, div with three nested p elements containing the escaped values of <%= article.title %>,
+Renamed views/plants/new.ejs to new.current.ejs,
+Removed <%- include('new'); %> from views/plants/index.ejs,
+Updated the views/plants/_form_fields action attribute from action="/plants" to action="/",
+Backed up project
+
+-Notes from 07_03_23
+Updated the views/plants/_form_fields.ejs action from action="/" to action="/plants",
+Added console.log(e) to the routes/plants.js to router.post() method catch,
+Updated the routes/plants.js router.post() method route handler path from router.post('/') to router.post('/plants'),
+Updated server.js app.use() method argument from app.use('/plants', plantRouter); to app.use(plantRouter),
+Commented out the routes/plants.js router.get('/'), router.get('/new'), and router.get(':id'),
+Added router.get('/', (req, res) => { res.render('plants/index')}), router.get('/new'), and router.get('/:id'),
+Created a new views/plants/new.ejs with the same markup as views/plants/_form_fields.ejs,
+Commented out the router.get('/new') and create a new router.get('/new') with render.res('new'),
+Moved the button element in views/_form_fields.ejs outside of the form element,
+Backed up project
+
+-Notes from 07_05_23
+Renamed the routes/plants.js to plants.current.070323.js,
+Imported a back up of routes/plants.js from backup 07_02_23 1,
+Updated the server.js app.use(plantRouter) to app.use('/plants', plantRouter),
+Updated the views/plants/_form_fields.ejs and moved the anchor cancel outside of the form,
+Updated the views/plants/_form_fields.ejs and put the button and anchor elements inside the form,
+Updated the catch code block in routes/plants.js from res.render('/plants/new') to res.render('plants/new'),
+Updated the views/plants/new.ejs to display a div element that  contains the error from the async save.() call to models/plant.js plant schema,
+Updated the views/plants/new.ejs with a div class="error" and the scriptlet <% if (typeof error !== 'undefined' && error !== null) { %> <p><%= error %></p> <% } %> to display the error,
+Updated the routes/plants.js catch {} code block res.render('plants/new', { article: article, error: e.message }); method call to include another variable to contain the value of the message propety of the e object,
+Updated the routes/plants.js router.post() to catch from res.render('/plants/new') the absolute path, to the relative path res.render('plants/new'),
+Updated the routes/plants.js router.post() to catch to include console.log(e.message);,
+Updated the routes/plants.js article variable from a const to let to fix the assignment error,
+Updated the routes.plants.js router.get(':id') to router.get('/:id'),
+Backed up project,
+Created _new_current.ejs as duplicate of new.current.ejs which contains the new article button mark up and sorting the article cards,
+Added <%- include('plants/_new_current'); %> to views/index.ejs,
+Updated the views/plants/_form_fields.ejs textarea element for the markdown with the required attribute,
+Updated the router.get('/:id') router handler to { res.send(req.params.id); } to verify and display the id created by the Plant() constructor from the database,
+
+-Notes from 07_06_23
+Backed up project,
+Created a new template as views/plants/show.ejs,
+
+-Notes from 07_07_23
+Updated views/plants/_form_fields.ejs input and text elements with default values and innerHTML from the article object i.e. <%= article.title %>,
+Updated the routes/plants.js router.get('/new') router to render and pass a new empty Plants() object i.e. { article: new Plant() },
+Updated the routes/plants.js router.get('/:id') and added const article = Plant.findByID(req.params.id) and if(article == null) res.redirect('/'),
+Verified that the if else statement is working for the ('/:id') route,
+Updated the routes/plants.js router.get('/new') to res.render('plants/show', { article: article })
+Added to the views/plants/show.ejs added a div to the container for the createAt value,
+Added to the views/plants/show.ejs an anchor tag with the class btn and btn-secondary with an href="/" for the All Articles buttton,
+Added to the views/plants/show.ejs an ancor tag with the class btn and btn-info with an href="/plants/edit" for the Edit button,
+
+-Notes from 07_08_23
+Added to the views/plants/show.ejs add a div with the scriptlet containing <%= article.markdown %>,
+Backed up project,
+Commented out the const articles array in the server.js,
+Updated the app.get('/') index route with an async (req, res) and const articles = await Plant.find().short({ createdAt: 'desc' });,
+Moved the mongoose and Plant model const mongoose = require('mongoose') and Plant = require('./model/plant) to the top of server.js,
+Commented out the CDN for Bootstrap from layouts/layout.ejs,
+Commented out the CDN for Bootstrap from views/plants/_new_current.ejs,
+Removed the comment out for Bootstrap from layouts/layout.ejs,
+Removed the card class from views/plants/_new_current.ejs div with the code block of the forEach() method call,
+Added to views/plants/_new_current.ejs added a div with the class row to create a flex container for nested cards,
+Added to views/plants/_new_currernt.ejs added a div with the class col-12 col-md-6 col-lg-4 mb-4 for small medium and large size screens,
+Backed up project
+
+-Notes from 07_09_23
+Removed const port = 3000 from server.js,
+Removed const article = {[title: 'title', description: 'description', markdown: 'markdown']},
+Added a anchor tag to views/plants/_new_current.ejs <a href="<%= plants/article.id %>" class="btn btn-primary">Read More</a>,
+Installed slugify and marked node libraries,
+Added const marked = require('marked') and const slugify = require('slugify'); to models/plant.js,
+Added a methodcall on plantSchema as plantSchema.pre('validate', function() = { if (this.title) { this.slug = slugify(this.title, { lower: true, strict: true }) } }),
+
+-Notes from 07_10_23
+Added the next() function call to models/plants.js to the plantSchema.pre('validate', function(next)) {} to pass control,
+Updated routes/plants.js router.get('/:id') to router.get('/:slug') {    const article = await Plant.findOne(req.params.slug);},
+Updated routes/plants.js router.post('/') try to res.redirect(`/plants/${article.slug}`);,
+Updated views/plants/_new_current.ejs updated the anchor to href="plants/<%= article.slug %>",
+
+-Notes from 07_11_23
+Backed up project,
+Added to routes/plants.js added a router.delete('/:id', async (req, res) => { await Plant.findByIdAndDelete(req.params.id); redirect('/');});,
+Installed method-override add DELETE method,
+Added to server.js const methodOverride = require('method-override');,
+Added to server.js app.use(methodOverride('_method'));,
+Add to views/plants/_new_current.ejs added <form action="/plants/<%= article.id %>?_method=DELETE" class="d-inline" method="POST"> with a nested <button type="submit" class="btn btn-danger">Delete</button>,
+Backed up project,
+Installed dompurify and jsdom,
+Added to models/plant.js const createDomPurify = require('dompurify');
+Added to models/plant.js const { JSDOM } = require('jsdom')',
+Added to models/plant.js const dompurify = createDomPurify(new JSDOM().window);
+Defined a new field to models/plant.js sanitizedHtml: { type: String, required: true },
+Added to models/plant.js to the plantSchema.pre( if (this.markdown) { this.sanitizedHtml = dompurify.santize(marked.parse(this.markdown)) },
+Updated views/plants/show.ejs the innerHTML of the <div> <%- article.sanitizedHtml %> </div>,
+Installed marked-mangle to fix deprecation warning,
+Installed marked-gfm-heading-id to fix deprecation warning,
+Backed up project
+
+-Notes from 07_12_23
+Updated views/plants/_new_current.ejs updated the scriplet tag to <%= article.title %>,
+Added to routes/plants.js added a router.get('/edit/:id') { const article = Plant.findByID(req.params)}
+Created views/plants/edit.ejs,
+Added to views/plants/edit.ejs added a div with a nest h1 and from element,
+Added to views/plants/edit.ejs added to the form element the scriptlet <%- include('_form_fields' %>,
+Updated views/plants/show.ejs anchor href="<%= article.id %>"
+Commented out from views/plants/edit.ejs the form and removed the scriptlet <%- include('_form_fields') %>,
+Added to views/plants.edit.ejs the HTML markup from _form_field.ejs inside of the div class container,
+Updated views/plants/show.ejs to <a href="/plants/edit">,
+Commented out from views/plants/show.ejs h1 element with scriptlet <%= article.title %>,
+Updated views/plants/show.ejs scriplet to < article.title %> to disable ejs delimitation,
+Removed from views/plants/show.ejs commented out h1 element,
+Added to views/plants/show.ejs scriplet to <%= article.title %> to enable ejs delimitation,
+Added to routes/plants.js in the router.get('/edit/:id') {}, nested the code block in a try catch, with try { console.log(typeof article); console.log(article) } catch (error) { console.error(error) },
+Updated views/plants/show.ejs to <a href="/plants/edit/<%= article.id ">,
+Commented out routes/plants.js router.get('/:slug'),
+Added router.get('/:slug') with a nested try{ const article = await Plant.findOne()} catch (error) { console.log(error) },
+Backed up project,
+Removed commented out from routes/plants.js router.get('/:slug'),
+Commented out from routes/plants.js router.get('/:edit') try { //console.log(typeof article); console.log(article);}, 
+Removed commented out from routes/plants.js router.get('/:edit') try { console.log(typeof article); console.log(article);},
+Commented out from routes/plants.js router.get('/:slug') catch { //console.log(error);}, 
+Verified routes.plants.js router.get('/:slug') async function is fectching the object from the data base and console.log() the typeof and object literal,
+Updated views/plants/edit.ejs to the div container to <form action="/plants/<%= article.id %>?_method=PUT" method="POST">,
+Added routes/plants.js the router.put('/:id') with an empty {} code block,
+Backed up project
+
+-Notes from 07_14_23
+Added to routes/plants.js add a function saveArticleAndRedirect() that returns an async (req, res) => {try-catch {}},
+Added to routes/plants.js to router.put({ req.article = await Plant.findById(req.params.id); next();}, saveArticleAndRedirect('edit');),
+Commented out routes/plants.js router.post() route,
+Added to routes/plants.js router.post(router.post('/', async (req, res, next) => { req.article = new Plant(); next();}, saveArticleAndRedirect('new')); 
+Added to views/plants/show.ejs added a nested div with <div class="mb-2"><%= article.description %></div>,
+Backed up project,
+Commented out from views/plants/show.ejs Bootstrap CDN,
+Initialized an empty Git repository in the project,
+Verified .git folder with bash command ls -a,
+Created .gitignore file with .env and node_modules,
+Reset the staged . git commit,
+Added to to .gitignore added back_of_code_tests,
+Staged git add .,
+Initialized git commit -m "Initial commit",
+Created README.md,
+Initialized branch -M main,
+Initialized git remote add origin git@github.com:emprexvest/plant-blog.git,
+Initialized git push -u origin main,
+Backed up project
+
+-Notes from 07_18_23
+Added to views/plants/_form_fields.ejs add Filepond CDN link element with the href to the style sheet and script element with the href to the script,
+Added to views/plants/_form_fields.ejs add an input element with the class filepond,
+Installed multer,
+Added to views/plants/_form_fields.ejs added to the form element enctype="multipart/form-data",
+Added to server.js const multer = require('multer');,
+Added to server.js const upload = multer({ dest: 'public/uploads' });,
+Added to server.js app.use(express.static('public'));,
+
+-Notes from 07_20_23
+Added to server.js added comment labels for each section of the server,
+Updated server.js moved const upload = multer({ dest: 'public/uploads' }); to the import dependencies section,
+Updated models/plant.js updated the model plantSchema to include trailing commas at the end of each object,
+Added to models/plant.js add a new object to plantSchema model file: { type: String,}
+Removed from server.js const multer = require('multer');const upload = multer({ dest: 'public/uploads' });,
+Added to routes/plants.js added const multer = require('multer'); const upload = multer({ dest: 'public/uploads' });,
+
+-Notes from 07_21_23
+Removed from models/plant.js removed file {} object from the plantSchema,
+Commented out from server.js app.use(express.static('public'));,
+Added to models/plant.js module.exports.plantImageBasePath = plantImageBasePath;,
+Added to routes/plants.js added const path = require('path');,
+Added to routes/plants.js added const uploadPath = path.join('public', Plant.plantImageBasePath); to join public folder path with path provided by mongoose,
+Added to routes/plants.js added const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif']; as an array of supported MIME types for multer file boolean parameter,
+Added to routes/plants.js added const upload = multer({ dest: uploadPath, fileFilter: (req, file, callback) => { callback(null, imageMimeTypes.includes(file.mimetype)); } });,
+Added to models/plant.js add to the model the field imagePath: { type: String, },
+Removed commented out router.post('/') route,
+
+-Notes from 07_24_23
+Commented out from routes/plants.js const upload = multer(),
+Added to routes/plants.js added const storage = multer.diskStorage({ destination: (req, file, callback) => { callback(null, uploadPath); }, filename: (req, file, callback) => { const uniqueFilename = Date.now() + '-' + file.originalname; callback(null, uniqueFilename); } }) to define the storage path,
+Added to routes/plants.js added const fileFilter =  (req, file, callback) => { if (imageMimeTypes.includes(file.mimetype)) { callback(null, true); } else { callback(new Error('Invalid file type. Only JPEG, PNG, AND GIF images are allowed.')); } to determine if the file correct file type was used,
+Added to routes/plants.js added const upload = multer({ storage: storage, fileFilter: fileFilter }) to define references to the storage and fileFilter objects,
+Commented out from routes/plants.js router.post('/'),
+
+-Notes from 07_25_23
+Added to routes/plants.js added a second parameter to router.post(,async (req, res) => { const article = new Plant({ title: req.body.title, description: req.body.description, markdown: req.body.markdown })});,
+Added to routes/plants.js added an if() to router.post() code block {} to check if (req.file) { article.imagePath = path.join(Plant.plantImageBasePath, req.file.filename) },
+Added to routes/plants.js added a try-catch to router.post() code block {} try { await article.save(); res.redirect(`/plants/${article.slug}`); } catch (error) { res.render('plants/new', { article: article, error: error.message })},
+Commented out from routes/plants.js router.put(),
+Added to routes/plants.js added router.put() the parameters of id, the multipart form 'filepond', and async (req, res) => {} object router.put('/:id', upload.single('filepond'), async (req, res) => {}),
+Added to routes/plants.js added to router.put() code block {} a try-catch to pull the id from the database to update the title, description, and markdown from multipart form try { const article = await Plant.findById(req.params.id); article.title = req.body.title; req.body.description; req.body.markdown; },
+Added to routes/plants.js added to router.put() try code block {} if(req.file) { article.imagePath = path.join(Plant.plantImageBasePath, req.file.filename); },
+Added to routes/plants.js added to router.put() try code block { await article.save(); res.redirect(`/plants/${article.slug}`);},
+Added to routes/plants.js added to router.put() catch code block { console.log(error); res.render('plants/edit', { article: article });},
+Commented out from routes/plants.js function saveArticleAndRedirect(path),
+Backed up project
+
+-Notes from 07_26_23
+Updated routes/plants.js updated to const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];,
+Added to views/plants/_form_fields.ejs added to the hidden input element name="filepond",
+Added to views/plants/_form_fields.ejs added script element with document.addEventListener(),
+Added to routes/plants.js add to router.post('/') { console.log(req.file); } to log the upload process,
+
+-Notes from 07_27_23
+Removed from routes/plants.js router.post('/') { console.log(req.file) },
+Added to routes/plants.js router.post('/') { console.log("Form Data:" req.body); console.log("Uploaded File:", req.file) },
+Added to views/plants/_form_fields.ejs added input element the custom attribute data-filepond,
+Removed from server.js commented out app.use(express.static('public'));,
+Commented out from routes/plants.js const uploadPath = path.join('public', Plant.plantImageBasePath);,
+Added to routes/plants.js const uploadPath = path.join('public', ...Plant.plantImageBasePath.split('/'));,
+Commented out from routes/plants.js const uploadPath = path.join('public', ...Plant.plantImageBasePath.split('/'));
+Removed the comment out from routes/plants.js const uploadPath = path.join('public', Plant.plantImageBasePath);,
+
+-Notes from 07_29_23
+Updated routes/plants.js moved router.post('/') {console.log("Form Data:", req.body); console.log("Uploaded File:", req.file);} after the if() condition,
+Commented out from routes/plants.js the console.log("Form Data:", req.body); console.log("Uploaded File:", req.file) from the top of router.post('/'),
+Removed the comment out from routes/plants.js for at the top of router.post('/') console.log("Form: Data:", req.body),
+Commented out from routes/plants.js console.log("Form Data:", req.body) after the if() condition in 
+Added to routes/plants.js router.put('/:id') route { console.log("Form Data:", req.body);console.log("Uploaded File:", req.file);},
+Added to routes/plants.js updated upload = multer and added the property { limits: {fileSize: 5 * 1024 * 1024 } } to change default file size limit from 1MB to 5MB,
+Added to routes/plants.js const fs = require('fs'); to load the Node.js filesystem module,
+
+-Notes from 07_30_23
+Added to routes/plants.js added const directoryPath = path.join(__dirname, '..', 'public', 'uploads', 'plantImages'); to concatenate the path to the plantImages folder,
+Added to routes/plants.js fs.access(directoryPath, fs.constants.W_OK, (error) => { if (error) { console.log('Directory is not writable'); } else { console.log('Directory is writable'); } }); if condition to check if the folder is writable,
+Added to views/plants/_form_fields.ejs added to the FilePond.create({allowImagePreview: true}) method,
+Added to views/plants/_form_fields.ejs add a form element with action="/plants" method="POST" enctype="multipart/form-data" and a nested input element input type="file" class="filepond" name="filepond" data-filepond and button element button type="submit" class="btn btn-success mt-2",
+Backed up project
+
+-Notes from 07_31_23
+Commented out from views/plants/_form_fields.ejs input element nested in the first form element,
+Removed the comment out from views/plants/_form_fields.ejs input element nested in the first form element,
+Removed the comment out from routes/plants.js router.post('/') {} console.log,
+
+-Notes from 08_02_23
+Commented out from server.js const bodyParser = require('body-parser');,
+Added to models/plant.js the comment // Import depenencies,
+Added to models/plant.js the comment // Define the mongoose schema for the Plant model,
+Added to models/plant.js the comment // Pre-save middleware to automatically generate slug and santizedHtml fields
+Added to models/plant.js the comment // Export the mongoose model for the 'Plant' collection,
+Added to models/plant.js the comment // Export the plantImageBasePath for external use,
+Added to routes/plants.js the comment // Multer configuration for handling file uploads,
+Added to routes/plants.js the comment // This route is responsible for rendering the index page for plants,
+Added to routes/plants.js the comment // This route is responsible for rendering the form to create a new plant article,
+Added to routes/plants.js the comment // This route is responsible for rendering the form to edit an existing plant article identified by `:id`,
+Added to routes/plants.js the comment // This route is responsible for rendering the details of a specific plant article identified by `:slug`
+Added to routes/plants.js the comment // This route is responsible for handling the submission of the form to create a new plant article
+Added to routes/plants.js the comment // This route is responsible for handling the submission of the form to update an existing plant article identified by `:id`
+Added to routes/plants.js the comment // This route is responsible for handling the deletion of an existing plant article identified by `:id`
+Added to routes/plants.js the comment // Exports the router module for use in other files
+
+-Notes from 08_03_23
+Commented out from views/plants/_form_fields.ejs second form element,
+Commented out from views/plants/_form_fields.ejs script element,
+Added to views/plants/_form_fields.ejs add defer to script tag for the FilePond CDN,
+Removed the comment out from views/plants/_form_fields.ejs of the script element in the body for FilePond,
+Commented out from views/plants/_form_fields.ejs script element,
+Added to views/plants/_form_fields.ejs <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.js"></script>,
+Added to views/plants/_form_fields.ejs <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>,
+Added to views/plants/_form_fields.ejs <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet"/>,
+Added to views/plants/_form_fields.ejs <script src="https://unpkg.com/filepond-plugin-image-resize/dist/filepond-plugin-image-resize.js"></script>
+
+-Notes from 08_04_23
+Created public/javascript/filepondoconfig.js,
+Added to views/plants/_form_fields.ejs script element <script defer src="/public/javascripts/filepondconfig.js"></script>,
+Commented out from views/plants/_form_fields.ejs <script defer src="/public/javascripts/filepondconfig.js"></script>,
+Removed the comment out from script element containing addEventListener() method,
+Added to views/plants/_form_fields.ejs to script element const FilePondPluginImagePreview = FilePondPluginImagePreview.default;,
+Added to views/plants/_form_fields.ejs to script element FilePond.registerPlugin(FilePondPluginImagePreview);,
+Commented out from views/plants/_form_fields.ejs input within the form group,
+Added to views/plants/_form_fields.ejs add input element with class="filepond",
+Removed comment out from views/plants/_form_fields.ejs input within the form group,
+Backed up project
+Added to views/plants/_form_fields.ejs to script element const FilePondPluginImagePreview = FilePondPluginImagePreview.default; and FilePond.registerPlugin(FilePondPluginImagePreview);,
+Commented out from views/plants/_form_fields.ejs script element for document.addEventListener("DOMContentLoaded", function(){,
+Added to views/plants/_form_fields.ejs script element at the bottom of the code for document.addEventListener("DOMContentLoaded", function(){,
+
+-Notes from 08_08_23
+Added to views/plants/_form_fields.ejs added pond.on() method error handling pond.on('addfile', (error, file) => { if(!error) {console.log('File added:', file.filename)} else { console.log('Error adding file:', error)}});,
+Added to views/plants/_form_fields.ejs added pond.on() methon error handling pond.on('processfileerror');,
+Added to routes/plants.js const storageTemp for testing a new route with FilePond,
+Created in views temp-upload-form.ejs with temporary form and filepond instance,
+
+-Notes from 08_09_23
+Commented out from routes/plants.js // // Multer configuration for temporary use route,
+Commented out from views/plants/_form_fields.ejs // Original FilePond configuration,
+Added to views/plants/_form_fields.ejs to the script element document.addEventListener("DOMContentLoaded", function(){} function callback { FilePond.registerPlugin(FilePondPluginImagePreview)},
+Backed up project
+Added to views/plants/_form_fields.ejs added to the FilePond.registerPlugin() method argument FilePondPluginImageResize,
+Added to views/plants/_form_fields.ejs added const filePonds = FilePond.findElement(document.body); to return a collection of FilePond instances,
+Added to views/plants/_form_fields.ejs added const const imageReizeProperties = { imageResizeTargetWidth: 800, imageResizeTargetHeight: null, imageResizeMode: 'cover', imageResizeUpscale: false },
+Added to views/plants/_form_fields.ejs added filePonds.forEach() add forEach method call to loop through the collection of FilePond instances and check for errors,
+Added to views/plants/_form_fields.ejs added pond.on() method call on the pond object to add event handler for error checking,
+
+
+-Notes from 08_14_23
+Added to views/plants/_form_fields.ejs added const filePonds = document.querySelectorAll("input.filepond"); to return a collection of all of the FilePond instances,
+
+-Notes from 08_15_23
+Removed from views/plants/_form_fields.ejs the custom attribute data-filepond from the input element class="filepond",
+Added to views/plants/_form_fields.ejs added the custom attribute data-filepond to the input element with the class ="filepond",
+Added to views/plants/_form_fields.ejs added to FilePond.registerPlugin() the argument to the method call (FilePondPluginFileEncode) to upload files to MongoDB server as a base64 bit string,
+
+
+-Notes from 08_16_23
+Added to models/plant.js add another field to the Plant schema, imageData: { type: String, },
+Commented out from routes/plants.js commented out the orignal router.post('/') route,
+Added to routes/plants.js a copy of the new route to test 64bit file encoding,
+Added to routes/plants.js const image = await fs.promises.readFile(req.file.path, 'base64'); to handle the asynchronous method call,
+Added to routes/plants.js moved the try to top of the code block to encapsulate request object,
+Added to routes/plants.js updated the multer file size limit from 5MB to 10MB,
+
+
+-Notes from 08_17_23
+Commented out from views/plants/_form_fields.ejs commented out the form element and associated nested elements,
+Added to views/plants/_form_fields.ejs a copy of the original form without the attribute enctype="multipart/form-data",
+Removed from routes/plants.js no longer using a multipart/form and removed from the post.router('/') route the argument upload.single('filepond'),
+Commented out from routes/plants.js const multer = require('multer'); and // const imageMimeTypes = ['image/jpeg', 'image/png', 'image/gif'];
+
+
+-Notes from 08_17_23
+Added to models plant.js added another field to model imageType: { type: String, },
+Commented out from routes/plants.js commented out from router.post('/') if (req.file) {},
+Commented out form routes/plants.js commented out from router.post('/') console.log("Uploaded File:", req.file),
+Added to routes/plants.js added to router.post('/') if (req.body.filepond) { const uploadedFileData = JSON.parse(req.body.filepond); const imageBuffer = Buffer.from(uploadedFileData.data, 'base64'); article.imageData = imageBuffer; article.imageType = uploadedFileData.type;} to parse and access the buffer,
+Added to server.js added to the middleware app.use(express.json({ limit: '10mb' })); and the argument to app.use(express.urlencoded({ extended: false, limit: '10mb' }));,
+
+-Notes from 08_24_23
+Added to views/plants/_new_current.ejs added ejs scriplet tag <% if (article.imageData && article.imageType) { %> <img src="data:<%= article.imageType %>;base64,<%= article.imageData.toString('base64') %>" alt="Article Image" class="img-fluid">  <% } %> to display image,
+
+-Notes from 08_27_23
+Added to routes/plants.js router.get('/search', async (req, res) => { const searchText = req.query.q; try {         const articles = await Plant.find({ title: { $regex: searchText, $options: 'i' } })        res.render('plants/search', { articles: articles });  } catch (error) { console.error(error); res.redirect('/'); } }); Created search route and reg expression to search for the title of the article,
+
+-Notes from 08_28_23
+Added to views/plants/search.ejs div with a class container if (article.length === 0) { <p>No matching article </p> } else { articles.array.forEach(article => { <a href="/plants/<%= article.slug %>"><%= article.title %></a> )} else statement returns the value of article.slug and article.title to work as a hyperlink to the article,
+Commented out from views/layout.ejs <form class="d-flex" role="search">,
+Added to views/layout.ejs added to the form element <form class="d-flex" action="/plants/search" method="GET">,
+
+-Notes from 09_1_23
+Added to routes/plants.js added console.log(req.query.q); to router.get('/search') route,
+Added to layouts/layout.ejs added to the form element, added name="q" attribute,
+
+-Notes from 09_02_23
+Updated project objectives,
+Backed up project,
+Added commit to github
+
+-Notes from 09_03_23
+Added to the root a new folder named styles,
+Added a new styles.css to the styles.css,
+Added a custom rule for the class .search-result-card { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px },
+Added to views/layout.ejs <link rel="stylesheet" href="/styles/styles.css">,
+
+-Notes from 09_05_23
+Commented out from views/layout.ejs link element,
+Added to views/layout.ejs link element <link rel="stylesheet" href="/styles/styles.css">
+Added to views/plants/search.ejs added a head element,
+Added to views/plants/search.ejs added <link rel="stylesheet" href="/styles/styles.css">,
+Moved styles folder in the public folder,
+
+-Notes from 09_06_23
+Commented out from views/plants/search.ejs ul and li elements,
+Added to views/plants/search.ejs added div with the class row, nested div with the class col-12 col-md-6 col-lg-4 mb-4, nested div with class card, nested div with the class card-body, and nested h4 element with class card-title that contains the a anchor element,
+Added to views/plants/search.ejs added an image element <img src="data:<%= article.imageType %>;base64, <%= article.imageData.toString('base64') %>" alt="Article Image" class="card-img-top">,
+Added to views/plants/search.ejs added a div element with the classes card-subtitle text-muted mb-2, with a nested ejs expression <%= article.createdAt.toLocaleDateString() %>,
+Added to views/plants/search.ejs added a div element with the class class-text and mb-2, with a nested ejs expression <%= article.description %>, the escaped value of the article.description property,
+Added to views/plants/search.ejs added an anchor tag element <a href="plants/<%= article.slug %>" class="btn btn-primary">Read More</a>,
+Added to git main branch,
+
+-Notes from 09_10_23
+Added to views/plants/_new_current.ejs added classes to the div element class row added classes <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">,
+Removed from views/plants/_new_current.ejs element <div class="col-12 col-md-6 col-lg-4 mb-4">,
+Added to views/plants/_new_current.ejs div element classes <div class="col mb-4">,
+Added to views/plants/_new_current.ejs added the classes to the div card class added <div class="card h-100">,
+Removed from views/plants/_new_current.ejs the classes from div element <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3"> classes row-cols-1 row-cols-md-2 row-cols-lg-3,
+Removed from views/plants/_new_current.ejs the classes from div element <div class="card h-100"> classes h-100,
+
+-Notes from 09_11_23
+
+-Notes from 09_13_23
+Added to models/plant.js a new property to the plantSchema thumbsUp: { type: Number, default: 0, },
+Added to views/plants/_new_current.ejs added a button element <button id="thumbsUpButton" class="btn btn-success">Thumbs Up &#128077;</button>,
+
+-Notes from 09_14_23
+Added Axios package to allow thumbs up and down feature without reloading the page,
+Added to routes/plants.js added router.post('/thumbs/:id') try { const article = Plant.findByID(req.params.id); } catch (error) {}
+Added to models/plant.js added a property to the Plant schema,
+Added to views/plants/_new_current.ejs added a button element for thumbs and down <button id="thumbsUpButton" class="btn btn-success" onclick="thubumsUp('<%= article.id %>')">Thumbs Up &#128077; <%= article.thumbsUp %></button>,
+Added to views/plants/_new_current.ejs classes to the button elements class thumbs-up-button and thumbs-down-button,
+Added to public/javascripts/thumbs.js,
+Added to public/javascripts/thumbs.js function thumbsUp(articleId) {}
+Added to views/plants/_new_current.ejs updated the button elements with new class names and a custom data attribute <button id="thumbsUpButton_<%= article.id %>" class="btn btn-success thumbs-up-button" onclick="thumbsUp('<%= article.id %>')" data-article-id="<%= article.id %>">Thumbs Up &#128077; <%= article.thumbsUp %></button>,
+Added to public/javascripts/thumbs.js added function thumbsUp(articleId) {} and function thumbsDown(articleId) {} to handle the client-side POST request for the thumnbs up and down system,
+
+-Notes from 09 08_15_23
+Added to routes/plants.js added to router.post('/thumbs/:id') a console.log("Article Object:", article); console.log("Thumbs Up:", article.thumbsUp); console.log("Thumbs Down:", article.thumbsDown);,
+Added to routes/plants.js updated the res.json() arguments to res.json({ success: true, newThumbsUpCount: article.thumbsUp, newThumbsDownCount: article.thumbsDown });,
+Commented out from routes/plants.js router.post('/:slug') commented out the console.log(typeof article); and console.log(article);
+Commented out from routes/plants.js router.post('/edit/:id') commented out the console.log(typeof article); and console.log(article);
+
+-Notes from 09_18_23
+
+-Notes from 09_20_23
+
+-Notes from 09_23_23
+Created a Google Cloud Project account,
+Created a Google Cloud project named Garden Whispers,
+Added title Garden Whispers: The Secrets that Plants Tell,
+Added to APIKeys added the API Key from Google Maps,
+
+-Notes from 09_24_23
+Added to views/plants/_new_current.ejs add div element with id="map_<%= article.id %> as the container for Google maps,
+Added to models/plant.js added the field location: { type: { type: String, enum: ["Point"], default: "Point"}, coordinates: [Number],},
+Added to views/plants/_new_current.ejs added <% if (article.location) { %> const map_<%= article.id %> = new google.maps.Map(document.getElementById("map_<%= article.id %>"),{center: { lat: <%= article.location.coordinates[1] %>, lng: <%= article.location.coordinates[0] %>},
+Added to views/plants/_new_current.ejs added the script element with src = the Google Maps API key,
+Added to models/plant.js added to the location field, coordinates object, property added a default value, and array [0, 0],
+
+-Notes from 09_26_23
+Added to views/plants/_new_current.ejs added to the if () arguments (article.location && location.coordiantes),
+Created a new file public/javascripts/mapinit.js,
+Added to public/javascripts/mapinit.js declared let map; and a named function initializeMap() { map = new google.maps.Map(document.getElementById('map'), {})},
+Added to views/plants/_form_fields add script element <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCan1B_SwsXeN1BkGxXcKvq86KFrOTVlcI&libraries=places&callback=initializeMap" defer></script>,
+Commented out from public/javascripts/mapinit.js // google.maps.event.addDomListener(window, 'load', initializeMap);,
+Added to views/plants/_form_fields.ejs div element as the container of Google Maps <div id="map" style="height: 300px;"></div>,
+Added to public/javascripts/mapinit.js Added let marker; const mapOptions {} and passed mapOptions as callback to the Map constructor,
+Removed from public/javascripts/mapinit.js // google.maps.event.addDomListener(window, 'load', initializeMap);,
+Added to routes/plants.js res.render('plants/_new_current', { article: article, error: error.message });,
+Added to routes/plants.js router.post('/') added let article;
+Commented out routes/plants.js router.post('/') const article = new Plant(),
+
+-Notes from 09_29_23
+
+-Notes from 10_01_23
+Added to views/plants/_form_fields.ejs added the div class form-group, with a nested label latitude and hidden input form and the same for longitude,
+Added to public/javascripts/mapinit.js added an if () with the parameters navigator.geolocation {} to pull the lat and lng and set the value of the input elements id locationLat and locationLng,
+
+-Notes from 10_03_23
+Added to routes/plants.js added a console.log to the router.get('/plant') console.log('Type of "article" in the index route', typeof article);
+Added to views/plants/_new_current.ejs added a console.log() method call, with the parameters <% console.log("Type of article:", typeof article) %>,
+Added to views/plants/_new_current.ejs added a comment to remove the console.log(typeof article), 
+
+
+-Notes from 10_07_23
+Commented out from views/plants/_new_current.ejs <!--  console.log("Type of article:", article) %> -->,
+
+-Notes from 10_12_23
+Commented out from models/plant.js location: {} field,
+Commented out from router/plants.js from router.post('/') the location: {} field,
+Added to router/plants.js added to router.post('/')  coordinates: [parseFloat(req.body.locationLng), parseFloat(req.body.locationLat)], 
+Added to views/plants/_new_current.ejs add a div element with the id all-articles-map and the style:"height: 400px;" which is the container for the Google Map,
+Created a new file public/javascripts/allmapinit.js,
+Added to views/plants/_new_current.ejs script element with the src="/javascripts/allmapinit.js></script>,
+Added to public/javascripts/allmapinit let allMap; and defined the function initializeAllMap() { const mapOptions = { center: { lat: 0, lng: 0 }, zoom: 8 }};,
+Commented out from views/plants/_new_current.ejs commented out the Google Map API and mapinit.js script elements,
+Added to views/plants/_new_current.ejs added a script element with Google API with a callback to the initializeAllMap function,
+Added to views/plants/_new_current.ejs added a script element with the initializeAllMap script,
+
+-Notes from 10_19_23
+
+-Notes from 10_27_23
+Removed from views/plants/_new_current.ejs removed the commented out Bootstrap CSS and Script tag,\
+Removed from views/plants/_new_current.ejs removed commented out script tag for mapinit.js and initializeAllMap,
+Added comment to views/plants/_new_current.ejs add comments for each section,
+Removed from views/plants/_new_current.ejs removed Google Maps div element and if() statement for each article,
+Removed from views/plants/_new_current.ejs removed commented out code and placed it in the removed code note section,
+Removed from views/plants/_form_fields.ejs removed commented out code and placed it in the removed code note section,
+
+-Notes from 10_28_23
+Added to views/plants/_new_fields.ejs add comments to each section,
+
+-Notes from 10_29_23
+
+-Notes from 11_04_23
+
+-Notes from 11_05_23
+Created a new file in models/usermodel.js,
+Addded to models/usermodel.js const mongoose = require('mongoose'); to import Mongoose library,
+Added to models/usermodel.js const userSchema = new mongoose.Schema({}); with a blank Mongoose schema,
+Added to models/usermodel.js added the fields to the mongoose.Schema({}) object parameters {username: {type: String, required: true, unique: true,}},
+Added to models/usermodel.js added export module.exports = mongoose.model('User', userSchema);,
+
+-Notes from 11_08_23
+Created a new file views/plants/_login.ejs,
+Added views/plants/_login.ejs div element with the class container and a nested h1,
+
+-Notes from 11_11_23
+Added views/plants/_login.ejs added a div with two nested input elements,
+Added to routes/plants.js added router.get('/login') {} for the _login.ejs partial,
+
+-Notes from 12_30_23
+Studying TypeScript,
+
+-Notes from 01_05_23
+Studying TypeScript to make the authentication page and admin console,
+
+
+
+-----------------------------------------------------------------
+-Bugs in Progress
+
+Currently the content search box is not working and not connected to the cardScript.js
+-Temporarily putting a copy cardScript.js in the view/layouts folder
+--That did not work same error localhost/:1 Refused to execute script from 'http://localhost:3000/cardScript.js' because its MIME type ('text/html') is not executable, and strict MIME type checking is enabled.
+
+
+Look into why the  <%- body %> keyword is required to display my views\*.ejs files 
+-When I use any other keyword other body the app crashes as undefined, where is the body keyword being defined?
+
+
+Currently working on the article form to send the data from the textarea to the database
+
+The _form_fields cancel anchor tag is not clearing the _form_fields elements
+
+Add a route for the plants/new template
+
+When the navbar hits the viewport breakpoint, the menu toggle down is working, but not the up
+-The navbar toggle up and down is working in a plants/index, but not on the main route, so weird :-(
+*Fixed by commenting out the CDN for Bootstrap from the layouts/layout.ejs*
+
+
+Look up AWS and research
+
+In the plants/index.ejs div card, the <%= article.title %> is not showing up
+
+Remove the card body that is enclosing all of the cards
+
+The navbar is no longer showing up as part of the layout
+-Attempting to fix the problem by using a backup of the layout.ejs
+--Did not fix the problem
+---Compared the backup of server.js from 06_29_23 and the app.use(expressLayouts); is missing from the current server.js
+----Fixed the problem :-)
+
+Notes from 07_01_23
+Added default values and innerHTML to the elements in the partial _form_fields, but it crashed the server because they are undefined
+-Compared the sever route to the views/index.ejs and that the variable is going through the route with the object literal const myArticle = {title: 'Plants Route Title'}
+--The temporary variables are accessiable through the route :)
+---The problem is when I call the Plant() consturctor in the router.post() the value is not defined
+----I need to check if the Plant.js model is available in the routes/plants.js route
+-----I don't think my router.post() method call is firing
+------Researching the issue and it appears that I need a form action to fire the post request
+-------I was missing the action="/plants" and method="POST" within the form in new.ejs
+--------When I added the attributes but it did not trigger the POST method request
+---------I am going wrap all of the elements in _form_fields.ejs within a form element, which will also be wrapped in another through the <%- include('_form_fields'); %>
+----------The POST request was triggered, but it crashed the app with this error Error: Failed to lookup view "/plants/new" in views directory "C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog/views", this is a good thing :)
+
+Notes from 07_02_23
+The app is crashing with the reference error pointing to <%- include('plants/index') %>
+-I am going to comment out the form element wrapper in the views/new.ejs
+--Using backups of the routes/plants.js and views/_form_fields.ejs to locate the bug
+---The backups are working properly, now I need to compare the two files and locate the bug and REMEMBER THIS IS A REFERENCE ERROR!
+----I am going to include the attribute for the for the action="/plants" and the method="POST" into the views/_form_fields.ejs
+-----The app crashed with the error Error: Failed to lookup view "/plants/new" in views directory "C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog/views"
+------The views\new.ejs is a template of cards for sorting articles that have posted
+-------Currently it has placeholder data in the form of an array of object literals that are being displayed on the main index.ejs
+--------I will remove the form element from the new.ejs that contains that <%- include('_form_fields'); %>
+---------I will create a new route for rendering the _test_template.ejs, update the _test_template.ejs to include markup to receive and display the values and innerHTML from the _form_fields.ejs template, and update the actions within _form_fields.ejs
+----------This test should save the form data to the database and display it in the _test_template.ejs
+-----------I received this error TypeError: C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\views\plants\new.ejs:6
+------------I will omit the views/plants/new.ejs template attempting to avoid the bug
+-------------I received the error Could not find the include file "new"
+--------------I removed the <%- include('new'); %> from the views/plants/index.ejs
+---------------The landing page is now loading and I went directly to the route http://localhost:3000/plants/new and the page is loading properly
+----------------I am still receiving the error Error: Failed to lookup view "plants/new" in views directory "C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog/views"
+-----------------I changed _form_fields attribute from action="/plants" to action="/", and now I get the error Cannot POST /
+
+Notes from 07_03_23
+The app is not crashing, but I cannot post to the server from my _form_fields form group, error message Cannot POST /
+-It appears that I might be mounting the router incorrectly I am changing the app.use() method argument from app.use('/plants', plantRouter); to app.use(plantRouter)
+--Now I get the error Cannot GET /plants/new, which indicates that the server cannot find a matching route handler for the GET request to "plants/new"
+---I will update route handler definition
+----There is something wrong with way my GET and POST requests are being handled
+-----I am running into a routing issue, I should use a back up version of the code to compare my changes
+
+Notes from 07_05_23
+I updated how the server is mounting the plantRouter to include the app.use('/plants', plantRouter)
+-I need to figure out why my router.post() method is not working
+--I need to keep the button within the form for it to properly fire the event
+---I updated the router.post() method and I received this error Error: Failed to lookup view "/plants/new" in views directory "C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog/views"
+----I am going to test router.post() method call with the aritcle assigned to let
+-----I received the error Cannot GET /plants/64a5b6a258d8d1037fda6ec6, but that is good because it generated the id from the mongoose database :)
+------Currently the router.get('/:id') {} method call has an empty route handler
+
+Notes from 07_07_23
+I added a default value for the input element in views/plants/_form_fields.ejs and it crash with a reference error
+-Passed a variable article as an empty plant object to the plants/new route
+
+
+Notes from 07_08_23
+I updated the app.get('/') index route with a call to the Plant model to find and sort the articles, but now I get a reference error pointing to plants/_new_current <% article.forEach(article =>)
+-I changed the variable name in the server for the app.get('/') index route from const articles plural to singluar article: article and now the the page is working,
+--All of the articles show up, but there is some sort of nesting happening within the cards
+---Commented out the CDN for Bootstrap from the layouts/layout.ejs and it fixed the navbar
+----Commented out the CDN from views/plants/_new_current.ejs all of the styling was removed
+-----I think my problem with the landing page is cards nested within other cards
+
+Notes from 07_09_23
+
+Notes from 07_10_23
+I implemented a form with methodOverride ?_method="DELETE" I received this error Cannot GET /plants64a5afb1c5d76b1b701baae9
+-I did not include the method="POST"
+--I Cannot DELETE /plants64a5afb1c5d76b1b701baae9
+---I missed a slash in the actions route it should be action="/plants/<%= article.id %>?_method="DELETE"></form>
+----I received this error after implementing the dompurify E11000 duplicate key error collection: PlantBlog;.plants index: slug_1 dup key: { slug: "test-071123" }
+
+Notes from 07_11_23
+I implemented a new route for router/plants.js router.get('/edit/:id') and when testing I received this error TypeError:  >> 4|     <h1 class="mb-2"><%= article.title %></h1>
+-I will add a console.log to the route to check the type of
+--I implemented a new router.get('/:slug') route with a try-catch and console.error(error) in my catch {} block and I also have the same try-catch in my router.get('/:edit') route try-catch try block
+
+Notes from 07_14_23
+
+Notes from 07_18_23
+I added the filepond, but it is not styling my input element with the filepond class
+
+Notes from 07_26_23
+Updated the /plants route and it is not uploading files to the server
+
+Notes from 07_29_23
+In the router.post('/'), I moved the console.() after the if() condition and now it is being called and the req.file is undefined
+-I changed the file extension for the file from .jpg to jpeg and now the console.log is working in the post route
+
+Notes from 08_18_23
+PayloadTooLargeError: request entity too large
+    at readStream (C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express\node_modules\raw-body\index.js:156:17)
+    at getRawBody (C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express\node_modules\raw-body\index.js:109:12)
+    at read (C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express\node_modules\body-parser\lib\read.js:79:3)
+    at urlencodedParser (C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express\node_modules\body-parser\lib\types\urlencoded.js:116:5)
+    at Layer.handle [as handle_request] (C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express\lib\router\index.js:328:13)
+    at C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express\lib\router\index.js:286:9
+    at Function.process_params (C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express\lib\router\index.js:346:12)
+    at next (C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express\lib\router\index.js:280:10)
+    at module.exports (C:\Users\Owner\Desktop\Projects\Web\javascript\PlantBlog\node_modules\express-ejs-layouts\lib\express-layouts.js:116:3)
+-I am going to install body-parser to change the limit of the payload size in Express
+
+
+-----------------------------------------------------------------
+-Terminal Commands
+
+npm run devStart
+
+
+-----------------------------------------------------------------
+-Routing
+
+The current routing of the index pages:
+
+Plants Route: Server > plantRouter > plantRouter > routes/plants.js > views/plants/index.ejs > views/plants/<%- include('plantform') %>
+
+-----------------------------------------------------------------
+-CSS Styling
+
+Bootstrap styling from CDN in layouts/layout.ejs
+
+
+
+/* Two different implmentation options for color styling the navbar */
+.navbar {
+background-color: hsl(120, 50%, 50%); /* Original green */
+border-color: hsl(120, 50%, 33.33%); /* 1/3 darker green */
+color: hsl(120, 50%, 16.67%); /* 2/3 darker green */
+
+
+background-color: rgb(120, 160, 120); /* Original green */
+border-color: rgb(120, 140, 120); /* 1/3 darker green */
+color: rgb(120, 120, 120); /* 2/3 darker green */
+
+}
+
+
+
+-----------------------------------------------------------------
+-Removed code for testing
+
+
+--Removed on 07_02_23 from views/plants/new.ejs
+<form>
+<%- include('_form_fields'); %>
+</form>
+
+--Removed on 07_02_23 from views/plants/index.ejs
+<%- include('new'); %>
+
+--Removed on 07_06_23 from routes/plants.js
+router.get('/new', (req, res) => {
+    res.render('plants/new', { article: new Plant() })
+})
+
+--Removed on 07_12_23 from views/plants/edit.ejs
+    <!-- <form action="/plants/<%= article.id %>?_method=PUT" method="POST">
+        <%- include('_form_field') %>
+    </form> -->
+
+
+--Removed on 07_21_23 from routes/plants.js
+// router.post('/', async (req, res) =>{
+//     let article = new Plant({
+//         title: req.body.title,
+//         description: req.body.description,
+//         markdown: req.body.markdown
+//     });
+//     try {
+//     article = await article.save();
+//     res.redirect(`/plants/${article.slug}`);
+//     } catch (e) {
+//         console.log(e.message);
+//         res.render('plants/new', { article: article, error: e.message });
+//     }
+// });
+
+--Removed on 08_18_23 from views/plants/_form_fields.ejs
+<!-- Original multipart/form-data -->
+<!-- <form action="/plants" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input required value="<%= article.title %>" type="text" name="title" id="title" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea name="description" id="description" class="form-control"><%= article.description %></textarea>
+    </div>
+    <div class="form-group">
+        <label for="markdown">Markdown</label>
+        <textarea required name="markdown" id="markdown" class="form-control"><%= article.markdown %></textarea>
+    </div>
+    <input type="file" class="filepond" name="filepond" data-filepond>
+    <a href="/" class="btn btn-secondary mt-2">Cancel</a>
+    <button type="submit" class="btn btn-success mt-2">Save</button>
+</form> -->
+
+--Removed on 09_06_23 from views/plants/search.ejs
+<head>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<div class="container">
+    <h1 class="mb-4">Search Results</h1>
+    <% if (articles.length === 0) { %>
+            <p>No matching articles found</p>
+    <% } else { %>
+        <ul>
+            <% articles.forEach(article => { %>
+                <li class="search-result-card">
+                    <a href="/plants/<%= article.slug %>"><%= article.title %></a>
+                </li>
+            <% }); %>
+        </ul>
+    <% } %>
+</div>
+
+--Removed from views/plants/_new_current.ejs on 09/10/3
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer></script> -->
+<div class="container">
+    <h1 class="mb-4">Plant Articles</h1>
+    <a href="/plants/new" class="btn btn-success mb-2">New Article</a>
+    <div class="row">
+        <% article.forEach(article => { %>
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><%= article.title %></h4>
+                    <div class="card-subtitle text-muted mb-2">
+                        <%= article.createdAt.toLocaleDateString() %>
+                    </div>
+                    <div class="class-text mb-2"><%= article.description %></div>
+                    <% if (article.imageData && article.imageType) { %>
+                        <img src="data:<%= article.imageType %>;base64,<%= article.imageData.toString('base64') %>" alt="Article Image" class="img-fluid">
+                    <% } %>
+                    <a href="plants/<%= article.slug %>" class="btn btn-primary">Read More</a>
+                    <form action="/plants/<%= article.id %>?_method=DELETE" class="d-inline" method="POST">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>
+<h1 class="card">Placeholder from views/_current_new.ejs</h1>
+
+
+--Removed from views/plants/_new_current.ejs on 10/27/23
+                    <div id="map_<%= article.id %>" style="height: 200px;">Map Placeholder</div>
+
+
+                    <% if (article.location && article.location.coordinates) { %>
+                        const map_<%= article.id %> = new google.maps.Map(document.getElementById("map_<%= article.id %>"), {
+                            center: {
+                                lat: <%= article.location.coordinates[1] %>,
+                                lng: <%= article.location.coordinates[0] %>
+                            },
+                        });
+                    <% } %>
+
+--Removed from views/plants/_form_fields.ejs on 10/27/23
+// Original FilePond configuration
+        // const inputElement = document.querySelector("input.filepond");
+        // const pond = FilePond.create(inputElement, {
+        //     allowFileTypeValidation: true,
+        //     acceptedFileTypes: ["image/jpeg", "image/png", "image/gif"],
+        //     allowImagePreview: true
+        // });
+
+        // pond.on('addfile', (error, file) => {
+        //     if (!error) {
+        //         console.log('File added:', file.filename);
+        //     } else {
+        //         console.log('Error adding file:', error);
+        //     }
+        // });
+
+
+        // pond.on('processfileerror', (error, file) => {
+        //     console.log('Error processing file:', error);
+        // });
+
+
+        // const FilePondPluginImagePreview = FilePondPluginImagePreview.default;
+        // FilePond.registerPlugin(FilePondPluginImagePreview);
+
+--Removed from views/plants/_form_fields.ejs on 10/27/23
+<!-- <form action="/plants" method="POST" enctype="multipart/form-data">
+    <input type="file" class="filepond" name="filepond" data-filepond>
+    <button type="submit" class="btn btn-success mt-2">Save 2</button>
+</form> -->
+
+--Removed from views/plants/_form_fields.ejs on 10/27/23
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function(){
+        // const FilePondPluginImagePreview = FilePondPluginImagePreview.default;
+        // FilePond.registerPlugin(FilePondPluginImagePreview);
+        const inputElement = document.querySelector("input.filepond");
+        const pond = FilePond.create(inputElement, {
+            allowFileTypeValidation: true,
+            acceptedFileTypes: ["image/jpeg", "image/png", "image/gif"],
+            allowImagePreview: true
+        });
+        const FilePondPluginImagePreview = FilePondPluginImagePreview.default;
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+    });
+</script> -->
+
+--Removed from views/plants/_form_fields.ejs on 10/27/23
+        // const FilePondPluginImagePreview = FilePondPluginImagePreview.default;
+

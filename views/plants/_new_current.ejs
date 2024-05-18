@@ -1,0 +1,95 @@
+<!-- Imported scripts for Axios, custom JavaScript, and Google Maps API -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/javascripts/thumbs.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCan1B_SwsXeN1BkGxXcKvq86KFrOTVlcI&libraries=places&callback=initializeAllMap" defer></script>
+
+
+<!-- JavaScript to initialize Google Maps and place article pins on the map -->
+<script>
+    let allMap;
+
+function initializeAllMap() {
+    const apiKey = 'AIzaSyCan1B_SwsXeN1BkGxXcKvq86KFrOTVlcI';
+
+    const mapOptions = {
+        center: {lat: 0, lng: 0 },
+        zoom: 8
+    };
+
+    allMap = new google.maps.Map(document.getElementById('all-articles-map'), mapOptions);
+
+    const articleLocations = [
+        <% article.forEach(article => { %>
+            <% if (article.coordinates) { %>
+                { lat: <%= article.coordinates[1] %>, lng: <%= article.coordinates[0] %> },
+           <% } %>
+       <% }) %>
+    ];
+
+    articleLocations.forEach(location => {
+        new google.maps.Marker({
+            position: location,
+            map: allMap,
+        });
+    })
+
+}
+
+google.maps.event.addDomListener(window, 'load', initializeAllMap);
+
+</script>
+
+<!-- Error handling for potential server errors -->
+<% if (typeof error !== 'undefined' && error !== null) { %>
+    <div class="error">
+        <p><%= error %></p>
+    </div>
+<% } %>
+
+
+<div id="all-articles-map" style="height: 400px;">Google Maps Placeholder</div>
+
+
+<!-- Container for displaying plant articles and a button to create a new article -->
+<div class="container">
+    <h1 class="mb-4">Plant Articles</h1>
+
+    <!-- Displaying articles as cards with various details -->
+    <a href="/plants/new" class="btn btn-success mb-2">New Article</a>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <% article.forEach(article => { %>
+        <div class="col mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4 class="card-title"><%= article.title %></h4>
+                    <div class="card-subtitle text-muted mb-2">
+                        <%= article.createdAt.toLocaleDateString() %>
+                    </div>
+                    <div class="class-text mb-2"><%= article.description %></div>
+
+                    <!-- Buttons for interacting with articles -->
+                    <button id="thumbsUpButton_<%= article.id %>" class="btn btn-success thumbs-up-button" onclick="thumbsUp('<%= article.id %>')" data-article-id="<%= article.id %>">Thumbs Up &#128077; <%= article.thumbsUp %></button>
+                    <button id="thumbsDownButton_<%= article.id %>" class="btn btn-danger thumbs-down-button" onclick="thumbsDown('<%= article.id %>')" data-article-id="<%= article.id %>">Thumbs Down &#128078; <%= article.thumbsDown %></button>
+
+                    <!-- Display article image if available -->
+                    <% if (article.imageData && article.imageType) { %>
+                        <img src="data:<%= article.imageType %>;base64,<%= article.imageData.toString('base64') %>" alt="Article Image" class="img-fluid">
+                    <% } %>
+                    
+                    <!-- Link to read the full article -->
+                    <a href="plants/<%= article.slug %>" class="btn btn-primary">Read More</a>
+
+                    <!-- Form for deleting articles -->
+                    <form action="/plants/<%= article.id %>?_method=DELETE" class="d-inline" method="POST">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>
+
+<!-- Placeholder for development (remove in production) -->
+<h1 class="card">Placeholder from views/_current_new.ejs</h1>
+
